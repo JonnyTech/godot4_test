@@ -49,6 +49,7 @@ func read_db():
 	db = SQLite.new()
 	db.path = db_name
 	db.verbosity_level = verbosity_level
+	db.read_only = true
 	db.open_db()
 	db.query("SELECT FirstName, LastName, Score FROM " + table_name + " ORDER BY score DESC LIMIT 5;")
 	var query_result : Array = db.query_result
