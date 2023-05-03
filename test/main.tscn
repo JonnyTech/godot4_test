@@ -34,11 +34,19 @@ offset_bottom = 200.0
 text = "Create
 database"
 
-[node name="btn_db_read" type="Button" parent="."]
+[node name="btn_db_fill" type="Button" parent="."]
 offset_left = 240.0
 offset_top = 240.0
 offset_right = 320.0
 offset_bottom = 320.0
+text = "Fill
+database"
+
+[node name="btn_db_read" type="Button" parent="."]
+offset_left = 240.0
+offset_top = 360.0
+offset_right = 320.0
+offset_bottom = 440.0
 text = "Read
 database"
 
@@ -51,4 +59,5 @@ text = "Test..."
 
 [connection signal="finished" from="VideoStreamPlayer" to="VideoStreamPlayer" method="play"]
 [connection signal="pressed" from="btn_db_create" to="script_db" method="create_db"]
+[connection signal="pressed" from="btn_db_fill" to="script_db" method="populate_db"]
 [connection signal="pressed" from="btn_db_read" to="script_db" method="read_db"]

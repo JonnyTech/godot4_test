@@ -6,6 +6,8 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
+config_version=5
+
 [application]
 
 config/name="test"

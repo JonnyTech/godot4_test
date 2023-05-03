@@ -7,6 +7,9 @@ var db_name := "res://db_scores"
 var table_name := "users"
 const verbosity_level : int = SQLite.NORMAL
 
+func _ready():
+	randomize()
+	
 func create_db():
 	var table_dict : Dictionary = Dictionary()
 	table_dict["ID"] = {"data_type":"int", "primary_key": true, "not_null": true}
@@ -24,25 +27,22 @@ func create_db():
 	db.drop_table(table_name)
 	db.create_table(table_name,table_dict)
 	db.close_db()
-	populate_db()
 
 func populate_db():
+	var characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+	var rnd_str = func(maxlen: int):
+		var result = ""
+		for i in range(randi() % maxlen + 1):
+			result += characters[randi() % characters.length()]
+		return result
+	var row_array : Array = []
+	for i in 100:
+		row_array.append({"FirstName":rnd_str.call(10),"LastName":rnd_str.call(10),"Email":rnd_str.call(6)+"@"+rnd_str.call(10),"Phone":str(randi() % 10000000),"Nationality":rnd_str.call(15),"Gender":rnd_str.call(1),"Score":randi() % 100000})
 	db = SQLite.new()
 	db.path = db_name
 	db.verbosity_level = verbosity_level
 	db.open_db()
-	db.insert_rows(table_name, [
-	{"FirstName":"A","LastName":"A","Email":"@","Phone":"111","Nationality":"A","Gender":"A","Score":1},
-	{"FirstName":"B","LastName":"B","Email":"@","Phone":"222","Nationality":"B","Gender":"B","Score":2},
-	{"FirstName":"C","LastName":"C","Email":"@","Phone":"333","Nationality":"C","Gender":"C","Score":3},
-	{"FirstName":"D","LastName":"D","Email":"@","Phone":"444","Nationality":"D","Gender":"D","Score":4},
-	{"FirstName":"E","LastName":"E","Email":"@","Phone":"555","Nationality":"E","Gender":"E","Score":5},
-	{"FirstName":"F","LastName":"F","Email":"@","Phone":"666","Nationality":"F","Gender":"F","Score":6},
-	{"FirstName":"G","LastName":"G","Email":"@","Phone":"777","Nationality":"G","Gender":"G","Score":7},
-	{"FirstName":"H","LastName":"H","Email":"@","Phone":"888","Nationality":"H","Gender":"H","Score":8},
-	{"FirstName":"I","LastName":"I","Email":"@","Phone":"999","Nationality":"I","Gender":"I","Score":9},
-	{"FirstName":"J","LastName":"J","Email":"@","Phone":"000","Nationality":"J","Gender":"J","Score":0}
-	])
+	db.insert_rows(table_name, row_array)
 	db.close_db()
 
 func read_db():
