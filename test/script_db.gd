@@ -20,8 +20,9 @@ func create_db():
 	table_dict["Gender"] = {"data_type":"char(40)", "not_null": true}
 	table_dict["Score"] = {"data_type":"int", "not_null": true}
 	db = SQLite.new()
-	db.path = settings.db_name
 	db.verbosity_level = verbosity_level
+	db.default_extension = ""
+	db.path = settings.db_name
 	db.open_db()
 	db.drop_table(settings.db_table)
 	db.create_table(settings.db_table,table_dict)
@@ -38,25 +39,36 @@ func populate_db():
 	for i in 100:
 		row_array.append({"FirstName":rnd_str.call(10),"LastName":rnd_str.call(10),"Email":rnd_str.call(6)+"@"+rnd_str.call(10),"Phone":str(randi() % 10000000),"Nationality":rnd_str.call(15),"Gender":rnd_str.call(1),"Score":randi() % 100000})
 	db = SQLite.new()
-	db.path = settings.db_name
 	db.verbosity_level = verbosity_level
-	db.open_db()
-	db.insert_rows(settings.db_table, row_array)
+	db.default_extension = ""
+	db.path = settings.db_name
+	if not db.open_db():
+		var label := $"../lbl_db_read"
+		label.text = "Error opening database"
+	else:
+		db.insert_rows(settings.db_table, row_array)
 	db.close_db()
 
 func read_db():
-	db = SQLite.new()
-	db.path = settings.db_name
-	db.verbosity_level = verbosity_level
-	db.read_only = true
-	db.open_db()
-	db.query("SELECT FirstName, LastName, Score FROM " + settings.db_table + " ORDER BY score DESC LIMIT 5;")
-	var query_result : Array = db.query_result
 	var label := $"../lbl_db_read"
 	label.text = ""
-	if query_result.is_empty():
-		label.text = "EMPTY DATABASE"
+	if not FileAccess.file_exists(settings.db_name):
+		label.text = "Error: database not found"
+		return
 	else:
-		for selected_row in query_result:
-			label.text = label.text + str(selected_row) + "\n"
+		db = SQLite.new()
+		db.verbosity_level = verbosity_level
+		db.default_extension = ""
+		db.path = settings.db_name
+		db.read_only = true
+		if not db.open_db():
+			label.text = "Error opening database"
+		else:
+			db.query("SELECT FirstName, LastName, Score FROM " + settings.db_table + " ORDER BY score DESC LIMIT 5;")
+			var query_result : Array = db.query_result
+			if query_result.is_empty():
+				label.text = "EMPTY DATABASE"
+			else:
+				for selected_row in query_result:
+					label.text = label.text + str(selected_row) + "\n"
 	db.close_db()
