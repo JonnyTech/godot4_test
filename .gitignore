@@ -1,0 +1,4 @@
+**/*.import
+**/*.db
+**/.godot/*
+!**/.godot/extension_list.cfg

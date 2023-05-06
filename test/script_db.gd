@@ -4,29 +4,32 @@ extends Node
 
 var db : SQLite = null
 const verbosity_level : int = SQLite.NORMAL
+var label : Label
 
 func _ready():
+	label = $"../lbl_db_read"
 	randomize()
-	$"../lbl_db_read".text = "Database: " + settings.db_name + "\nTable: " + settings.db_table + "\nBackground: " + settings.background
-
-func create_db():
-	var table_dict : Dictionary = Dictionary()
-	table_dict["ID"] = {"data_type":"int", "primary_key": true, "not_null": true}
-	table_dict["FirstName"] = {"data_type":"char(40)", "not_null": true}
-	table_dict["LastName"] = {"data_type":"char(40)", "not_null": true}
-	table_dict["Email"] = {"data_type":"char(40)", "not_null": true}
-	table_dict["Phone"] = {"data_type":"char(40)", "not_null": true}
-	table_dict["Nationality"] = {"data_type":"char(40)", "not_null": true}
-	table_dict["Gender"] = {"data_type":"char(40)", "not_null": true}
-	table_dict["Score"] = {"data_type":"int", "not_null": true}
+	label.text = "Database: " + settings.db_name + "\nTable: " + settings.db_table + "\nBackground: " + settings.background
 	db = SQLite.new()
 	db.verbosity_level = verbosity_level
 	db.default_extension = ""
 	db.path = settings.db_name
+
+func create_db():
+	db.read_only = false
 	db.open_db()
 	db.drop_table(settings.db_table)
-	db.create_table(settings.db_table,table_dict)
+	db.create_table(settings.db_table, {
+		"FirstName" : {"data_type":"char(40)", "not_null": true},
+		"LastName" : {"data_type":"char(40)", "not_null": true},
+		"Email" : {"data_type":"char(40)", "not_null": true},
+		"Phone" : {"data_type":"char(40)", "not_null": true},
+		"Nationality" : {"data_type":"char(40)", "not_null": true},
+		"Gender" : {"data_type":"char(40)", "not_null": true},
+		"Score" : {"data_type":"int", "not_null": true}
+	})
 	db.close_db()
+	label.text = "Database created"
 
 func populate_db():
 	var characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
@@ -38,28 +41,22 @@ func populate_db():
 	var row_array : Array = []
 	for i in 100:
 		row_array.append({"FirstName":rnd_str.call(10),"LastName":rnd_str.call(10),"Email":rnd_str.call(6)+"@"+rnd_str.call(10),"Phone":str(randi() % 10000000),"Nationality":rnd_str.call(15),"Gender":rnd_str.call(1),"Score":randi() % 100000})
-	db = SQLite.new()
-	db.verbosity_level = verbosity_level
-	db.default_extension = ""
-	db.path = settings.db_name
+	db.read_only = false
 	if not db.open_db():
-		var label := $"../lbl_db_read"
 		label.text = "Error opening database"
+		return
+	if db.insert_rows(settings.db_table, row_array):
+		label.text = "Added 100 rows to " + settings.db_table
 	else:
-		db.insert_rows(settings.db_table, row_array)
+		label.text = "Error witn database contents"
 	db.close_db()
 
 func read_db():
-	var label := $"../lbl_db_read"
 	label.text = ""
 	if not FileAccess.file_exists(settings.db_name):
 		label.text = "Error: database not found"
 		return
 	else:
-		db = SQLite.new()
-		db.verbosity_level = verbosity_level
-		db.default_extension = ""
-		db.path = settings.db_name
 		db.read_only = true
 		if not db.open_db():
 			label.text = "Error opening database"
@@ -71,4 +68,4 @@ func read_db():
 			else:
 				for selected_row in query_result:
 					label.text = label.text + str(selected_row) + "\n"
-	db.close_db()
+		db.close_db()
