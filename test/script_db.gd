@@ -7,7 +7,7 @@ const verbosity_level : int = SQLite.NORMAL
 var label : Label
 
 func _ready():
-	label = $"../lbl_db_read"
+	label = $"../lbl_db_status"
 	randomize()
 	label.text = "Database: " + settings.db_name + "\nTable: " + settings.db_table + "\nBackground: " + settings.background
 	db = SQLite.new()
