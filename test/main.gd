@@ -15,6 +15,7 @@ func _ready():
 	else:
 		label.text = "Listening on port: " + str(settings.udp_port)
 	label.text += "\nMouse: " + str(settings.mouse) + "\nBackground: " + settings.background + "\nPassphrase: " + settings.passphrase
+	label.text += "\nSettings: " + settings.settingsfile
 
 func udp_send():
 	udp.set_dest_address(udp_ip,settings.udp_port)

@@ -6,9 +6,11 @@ var background : String
 var udp_port : int
 var mouse : bool
 var passphrase : String
+var settingsfile : String
 
 func _ready():
 	var txt_settings = FileAccess.open("res://settings.json", FileAccess.READ)
+	settingsfile = ProjectSettings.globalize_path("res://settings.json");
 	var json_settings = JSON.new()
 	if FileAccess.get_open_error() == OK:
 		json_settings.parse(txt_settings.get_as_text())

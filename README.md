@@ -19,7 +19,7 @@ echo -n "Hello, world!" | nc -u -q0 127.0.0.1 54321
 Send UDP file:
 ```
 cat dummy.json > /dev/udp/127.0.0.1/54321
-cat dummy.json > nc -u -q0 127.0.0.1 54321
+cat dummy.json | nc -u -q0 127.0.0.1 54321
 ```
 
 SQLite AssetLib: https://github.com/2shady4u/godot-sqlite
