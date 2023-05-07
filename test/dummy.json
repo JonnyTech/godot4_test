@@ -1,0 +1,10 @@
+{
+  "Passphrase": "password",
+  "FirstName": "Jane",
+  "LastName": "Doe",
+  "Email": "jane.doe@example.com",
+  "Phone": "555-123-4567",
+  "Nationality": "Martian",
+  "Gender": "Female",
+  "Score": 12345
+}

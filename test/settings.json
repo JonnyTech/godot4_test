@@ -1,5 +1,8 @@
 {
   "db_name": "scores.db",
   "db_table": "users",
-  "background": "bg.ogv"
+  "background": "bg.ogv",
+  "udp_port": 54321,
+  "mouse": false,
+  "passphrase": "password"
 }

@@ -3,6 +3,9 @@ extends Node
 var db_name : String
 var db_table : String
 var background : String
+var udp_port : int
+var mouse : bool
+var passphrase : String
 
 func _ready():
 	var txt_settings = FileAccess.open("res://settings.json", FileAccess.READ)
@@ -13,3 +16,6 @@ func _ready():
 		db_name = "res://" + data_settings["db_name"]
 		db_table = data_settings["db_table"]
 		background = "res://" + data_settings["background"]
+		udp_port = data_settings["udp_port"]
+		mouse = data_settings["mouse"]
+		passphrase = data_settings["passphrase"]
