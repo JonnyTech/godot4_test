@@ -1,7 +1,5 @@
 extends Node
 
-# echo -n "hello" >/dev/udp/localhost/54321
-
 var udp_ip = "127.0.0.1"
 var udp = PacketPeerUDP.new()
 var label : Label
@@ -19,19 +17,23 @@ func _ready():
 
 func _input(event):
 	if event is InputEventKey and event.pressed:
-		if event.keycode == KEY_M:
-			Input.mouse_mode = int(not Input.mouse_mode)
+		match event.keycode:
+			KEY_M:
+				Input.mouse_mode = int(not Input.mouse_mode) as Input.MouseMode
+			KEY_ESCAPE:
+				OS.alert("Bye...", "EXIT")
+				get_tree().quit()
 
 func udp_send():
 	udp.set_dest_address(udp_ip,settings.udp_port)
 	udp.put_packet("HELLO".to_ascii_buffer())
 
 func udp_receive():
-	if udp.is_bound():
-		if udp.get_available_packet_count() > 0:
-			var array_bytes = udp.get_packet()
-			label.text = "[" + str(Time.get_ticks_usec()) + "] " + array_bytes.get_string_from_ascii()
-			var udp_dict = JSON.parse_string(array_bytes.get_string_from_ascii())
+	if udp.get_available_packet_count() > 0:
+		var array_bytes = udp.get_packet()
+		label.text = "[" + str(Time.get_ticks_usec()) + "] " + array_bytes.get_string_from_ascii()
+		var udp_dict = JSON.parse_string(array_bytes.get_string_from_ascii())
+		if udp_dict != null:
 			if udp_dict["Passphrase"] == settings.passphrase:
 				$script_db.db_insert(udp_dict)
 
