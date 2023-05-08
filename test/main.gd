@@ -17,6 +17,11 @@ func _ready():
 	label.text += "\nMouse: " + str(settings.mouse) + "\nBackground: " + settings.background + "\nPassphrase: " + settings.passphrase
 	label.text += "\nSettings: " + settings.settingsfile
 
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		if event.keycode == KEY_M:
+			Input.mouse_mode = int(not Input.mouse_mode)
+
 func udp_send():
 	udp.set_dest_address(udp_ip,settings.udp_port)
 	udp.put_packet("HELLO".to_ascii_buffer())
