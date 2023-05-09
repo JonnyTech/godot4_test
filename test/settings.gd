@@ -9,6 +9,9 @@ var passphrase : String
 var settingsfile : String
 
 func _ready():
+	var cmdline = OS.get_cmdline_user_args()
+	if len(cmdline) > 0:
+		db_name = cmdline[0]
 	var settingspath : String
 	if OS.has_feature("editor"):
 		settingsfile = ProjectSettings.globalize_path("res://settings.json");
@@ -20,12 +23,15 @@ func _ready():
 	if FileAccess.get_open_error() == OK:
 		json_settings.parse(txt_settings.get_as_text())
 		var data_settings = json_settings.data
-		db_name = "res://" + data_settings["db_name"]
 		db_table = data_settings["db_table"]
 		udp_port = data_settings["udp_port"]
 		mouse = data_settings["mouse"]
 		passphrase = data_settings["passphrase"]
 		if OS.has_feature("editor"):
+			if db_name.is_empty():
+				db_name = "res://" + data_settings["db_name"]
 			background = "res://" + data_settings["background"]
 		else:
+			if db_name.is_empty():
+				db_name = settingspath.path_join(data_settings["db_name"])
 			background = settingspath.path_join(data_settings["background"])

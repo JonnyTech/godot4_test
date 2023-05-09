@@ -7,4 +7,4 @@ mkdir $srcdir/$outdir
 $godot --export-release "Linux/X11" $outdir/$outfile $srcdir/project.godot
 $godot --export-release "Windows Desktop" $outdir/$outfile.exe $srcdir/project.godot
 cp $srcdir/settings.json $srcdir/bg.ogv $srcdir/$outdir
-$srcdir/$outdir/$outfile
+$srcdir/$outdir/$outfile #-- hello.db
