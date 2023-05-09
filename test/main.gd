@@ -6,7 +6,7 @@ var label : Label
 
 func _ready():
 	if not settings.mouse:
-		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+		mouse_visibility(Input.MOUSE_MODE_HIDDEN)
 	label = $lbl_udp_status
 	if (udp.bind(settings.udp_port) != OK):
 		label.text = "Error accessing UDP port: " + str(settings.udp_port)
@@ -19,10 +19,15 @@ func _input(event):
 	if event is InputEventKey and event.pressed:
 		match event.keycode:
 			KEY_M:
-				Input.mouse_mode = int(not Input.mouse_mode) as Input.MouseMode
+				mouse_visibility(int(not Input.mouse_mode) as Input.MouseMode)
 			KEY_ESCAPE:
 				OS.alert("Bye...", "EXIT")
 				get_tree().quit()
+
+func mouse_visibility(state : int):
+	Input.mouse_mode = state
+	label = $lbl_info
+	label.text += "\nMouse: " + str(state)
 
 func udp_send():
 	udp.set_dest_address(udp_ip,settings.udp_port)
@@ -42,3 +47,7 @@ func _process(_delta):
 
 func _exit_tree():
 	udp.close()	
+
+
+func db_read():
+	pass # Replace with function body.

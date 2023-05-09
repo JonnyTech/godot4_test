@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cnihmolbuqsha"]
+[gd_scene load_steps=5 format=3 uid="uid://cnihmolbuqsha"]
 
 [ext_resource type="Script" path="res://bg_video.gd" id="1_dkrg5"]
 [ext_resource type="Script" path="res://main.gd" id="1_ws2vf"]
 [ext_resource type="Script" path="res://script_db.gd" id="2_f5cpi"]
+[ext_resource type="Script" path="res://lbl_clock.gd" id="4_r50v3"]
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_ws2vf")
@@ -24,6 +25,7 @@ pivot_offset = Vector2(540, 960)
 autoplay = true
 buffering_msec = 100
 script = ExtResource("1_dkrg5")
+metadata/_edit_use_anchors_ = true
 
 [node name="script_db" type="Node" parent="."]
 script = ExtResource("2_f5cpi")
@@ -35,6 +37,7 @@ offset_right = 320.0
 offset_bottom = 200.0
 text = "Create
 database"
+metadata/_edit_use_anchors_ = true
 
 [node name="btn_db_fill" type="Button" parent="."]
 offset_left = 240.0
@@ -43,6 +46,7 @@ offset_right = 320.0
 offset_bottom = 320.0
 text = "Fill
 database"
+metadata/_edit_use_anchors_ = true
 
 [node name="btn_db_read" type="Button" parent="."]
 offset_left = 240.0
@@ -51,20 +55,48 @@ offset_right = 320.0
 offset_bottom = 440.0
 text = "Read
 database"
+metadata/_edit_use_anchors_ = true
+
+[node name="btn_udp_send" type="Button" parent="."]
+offset_left = 240.0
+offset_top = 480.0
+offset_right = 320.0
+offset_bottom = 560.0
+text = "Send
+UDP"
+metadata/_edit_use_anchors_ = true
 
 [node name="lbl_db_status" type="Label" parent="."]
 offset_left = 400.0
 offset_top = 80.0
 offset_right = 1000.0
-offset_bottom = 310.0
+offset_bottom = 320.0
+metadata/_edit_use_anchors_ = true
 
 [node name="lbl_udp_status" type="Label" parent="."]
 offset_left = 400.0
-offset_top = 280.0
+offset_top = 360.0
 offset_right = 1000.0
-offset_bottom = 510.0
+offset_bottom = 600.0
+metadata/_edit_use_anchors_ = true
+
+[node name="lbl_info" type="Label" parent="."]
+offset_left = 400.0
+offset_top = 640.0
+offset_right = 1000.0
+offset_bottom = 880.0
+metadata/_edit_use_anchors_ = true
+
+[node name="lbl_clock" type="Label" parent="."]
+offset_left = 1780.0
+offset_top = 1020.0
+offset_right = 1900.0
+offset_bottom = 1052.0
+script = ExtResource("4_r50v3")
+metadata/_edit_use_anchors_ = true
 
 [connection signal="finished" from="bg_video" to="bg_video" method="play"]
 [connection signal="pressed" from="btn_db_create" to="script_db" method="db_create"]
 [connection signal="pressed" from="btn_db_fill" to="script_db" method="db_fill"]
 [connection signal="pressed" from="btn_db_read" to="script_db" method="db_read"]
+[connection signal="pressed" from="btn_udp_send" to="." method="udp_send"]
