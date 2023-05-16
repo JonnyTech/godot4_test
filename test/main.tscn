@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cnihmolbuqsha"]
+[gd_scene load_steps=6 format=3 uid="uid://cnihmolbuqsha"]
 
 [ext_resource type="Script" path="res://bg_video.gd" id="1_dkrg5"]
 [ext_resource type="Script" path="res://main.gd" id="1_ws2vf"]
 [ext_resource type="Script" path="res://script_db.gd" id="2_f5cpi"]
 [ext_resource type="Script" path="res://lbl_clock.gd" id="4_r50v3"]
+[ext_resource type="Script" path="res://opt_flags.gd" id="7_mexny"]
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_ws2vf")
@@ -69,21 +70,21 @@ metadata/_edit_use_anchors_ = true
 [node name="lbl_db_status" type="Label" parent="."]
 offset_left = 400.0
 offset_top = 80.0
-offset_right = 1000.0
+offset_right = 880.0
 offset_bottom = 320.0
 metadata/_edit_use_anchors_ = true
 
 [node name="lbl_udp_status" type="Label" parent="."]
 offset_left = 400.0
 offset_top = 360.0
-offset_right = 1000.0
+offset_right = 880.0
 offset_bottom = 600.0
 metadata/_edit_use_anchors_ = true
 
 [node name="lbl_info" type="Label" parent="."]
 offset_left = 400.0
 offset_top = 640.0
-offset_right = 1000.0
+offset_right = 880.0
 offset_bottom = 880.0
 metadata/_edit_use_anchors_ = true
 
@@ -95,8 +96,21 @@ offset_bottom = 1052.0
 script = ExtResource("4_r50v3")
 metadata/_edit_use_anchors_ = true
 
+[node name="opt_flags" type="OptionButton" parent="."]
+offset_left = 920.0
+offset_top = 660.0
+offset_right = 1174.0
+offset_bottom = 726.0
+script = ExtResource("7_mexny")
+metadata/_edit_use_anchors_ = true
+
+[node name="flags" type="Sprite2D" parent="opt_flags"]
+position = Vector2(300, -160)
+centered = false
+
 [connection signal="finished" from="bg_video" to="bg_video" method="play"]
 [connection signal="pressed" from="btn_db_create" to="script_db" method="db_create"]
 [connection signal="pressed" from="btn_db_fill" to="script_db" method="db_fill"]
 [connection signal="pressed" from="btn_db_read" to="script_db" method="db_read"]
 [connection signal="pressed" from="btn_udp_send" to="." method="udp_send"]
+[connection signal="item_selected" from="opt_flags" to="opt_flags" method="_on_item_selected"]

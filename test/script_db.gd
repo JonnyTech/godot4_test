@@ -1,14 +1,12 @@
 extends Node
 
-# https://github.com/2shady4u/godot-sqlite
-
 var db : SQLite = null
-const verbosity_level : int = SQLite.VERBOSE#NORMAL
+const verbosity_level : int = SQLite.NORMAL
 var label : Label
 
 func _ready():
-	label = $"../lbl_db_status"
 	randomize()
+	label = $"../lbl_db_status"
 	label.text = "Database details:\nFilename: " + settings.db_name + "\nTable: " + settings.db_table
 	db = SQLite.new()
 	db.verbosity_level = verbosity_level
@@ -33,13 +31,13 @@ func db_create():
 
 func db_insert(data: Dictionary):
 	db.open_db()
-	db.insert_row(settings.db_table, {"FirstName":data["FirstName"],"LastName":data["LastName"],"Email":data["Email"],"Phone":data["Phone"],"Nationality":data["Nationality"],"Gender":data["Gender"],"Score":int(data["Score"])})
+	db.insert_row(settings.db_table,{"FirstName":data["FirstName"],"LastName":data["LastName"],"Email":data["Email"],"Phone":data["Phone"],"Nationality":data["Nationality"],"Gender":data["Gender"],"Score":int(data["Score"])})
 	db.close_db()
 
 func db_fill():
 	const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 	var rnd_str = func(maxlen: int):
-		var result = ""
+		var result : String = ""
 		for i in range(randi() % maxlen + 1):
 			result += characters[randi() % characters.length()]
 		return result

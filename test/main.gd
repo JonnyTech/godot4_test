@@ -20,11 +20,11 @@ func _input(event):
 		match event.keycode:
 			KEY_M:
 				mouse_visibility(int(not Input.mouse_mode) as Input.MouseMode)
-			KEY_ESCAPE:
+			KEY_Q, KEY_ESCAPE:
 				OS.alert("Bye...", "EXIT")
 				get_tree().quit()
 
-func mouse_visibility(state : int):
+func mouse_visibility(state : Input.MouseMode):
 	Input.mouse_mode = state
 	label = $lbl_info
 	label.text += "\nMouse: " + str(state)
@@ -47,7 +47,3 @@ func _process(_delta):
 
 func _exit_tree():
 	udp.close()	
-
-
-func db_read():
-	pass # Replace with function body.

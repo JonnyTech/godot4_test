@@ -1,7 +1,10 @@
 # godot4_test
 Godot 4 experimentations
 
+Acknowledgements:
 https://github.com/godotengine/godot
+https://github.com/2shady4u/godot-sqlite
+https://github.com/lipis/flag-icons
 
 Video encodes:
 ```
@@ -21,5 +24,3 @@ Send UDP file:
 cat dummy.json > /dev/udp/127.0.0.1/54321
 cat dummy.json | nc -u -q0 127.0.0.1 54321
 ```
-
-SQLite AssetLib: https://github.com/2shady4u/godot-sqlite
