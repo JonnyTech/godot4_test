@@ -1,9 +1,9 @@
 # godot4_test
 Godot 4 experimentations
 
-Acknowledgements:
-https://github.com/godotengine/godot
-https://github.com/2shady4u/godot-sqlite
+Acknowledgements:<br />
+https://github.com/godotengine/godot\
+https://github.com/2shady4u/godot-sqlite\
 https://github.com/lipis/flag-icons
 
 Video encodes:
@@ -14,7 +14,7 @@ Video encodes:
 
 Send UDP string:
 ```
-echo -n "Hello, world!" > /dev/udp/localhost/54321
+echo -n "Hello, world!" > /dev/udp/127.0.0.1/54321
 echo -n "Hello, world!" | nc -u -q0 127.0.0.1 54321
 
 ```

@@ -15,13 +15,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 420.0
-offset_top = -420.0
-offset_right = 1508.0
-offset_bottom = 1500.0
+offset_right = 1088.0
+offset_bottom = 1920.0
 grow_horizontal = 2
 grow_vertical = 2
-rotation = 1.5708
 pivot_offset = Vector2(540, 960)
 autoplay = true
 buffering_msec = 100
@@ -89,18 +86,18 @@ offset_bottom = 880.0
 metadata/_edit_use_anchors_ = true
 
 [node name="lbl_clock" type="Label" parent="."]
-offset_left = 1780.0
-offset_top = 1020.0
-offset_right = 1900.0
-offset_bottom = 1052.0
+offset_left = 960.0
+offset_top = 1840.0
+offset_right = 1040.0
+offset_bottom = 1872.0
 script = ExtResource("4_r50v3")
 metadata/_edit_use_anchors_ = true
 
 [node name="opt_flags" type="OptionButton" parent="."]
-offset_left = 920.0
-offset_top = 660.0
-offset_right = 1174.0
-offset_bottom = 726.0
+offset_left = 120.0
+offset_top = 1400.0
+offset_right = 374.0
+offset_bottom = 1466.0
 script = ExtResource("7_mexny")
 metadata/_edit_use_anchors_ = true
 

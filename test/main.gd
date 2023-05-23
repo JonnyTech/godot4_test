@@ -20,6 +20,13 @@ func _input(event):
 		match event.keycode:
 			KEY_M:
 				mouse_visibility(int(not Input.mouse_mode) as Input.MouseMode)
+			KEY_R:
+				if event.shift_pressed:
+					$".".position = Vector2(0,0)
+					$".".rotation_degrees = 0
+				else:
+					$".".position = Vector2(0,ProjectSettings.get("display/window/size/viewport_width"))
+					$".".rotation_degrees = 270
 			KEY_Q, KEY_ESCAPE:
 				OS.alert("Bye...", "EXIT")
 				get_tree().quit()
