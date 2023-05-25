@@ -27,8 +27,11 @@ func _input(event):
 				else:
 					$".".position = Vector2(0,ProjectSettings.get("display/window/size/viewport_width"))
 					$".".rotation_degrees = 270
+			KEY_F1:
+				OS.alert("M = Mouse cursor toggle\nR = Rotate 90°\nSHIFT+R = Rotate 0°\nQ or ESCAPE = Quit with dialog\nSHIFT+Q or SHIFT+ESCAPE = Quit!","Keyboard help")
 			KEY_Q, KEY_ESCAPE:
-				OS.alert("Bye...", "EXIT")
+				if not event.shift_pressed:
+					OS.alert("Bye...", "EXIT")
 				get_tree().quit()
 
 func mouse_visibility(state : Input.MouseMode):
