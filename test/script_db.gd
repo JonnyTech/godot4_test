@@ -1,10 +1,10 @@
 extends Node
 
-var db : SQLite = null
-const verbosity_level : int = SQLite.NORMAL
-var label : Label
+var db: SQLite = null
+const verbosity_level: int = SQLite.NORMAL
+var label: Label
 
-func _ready():
+func _ready() -> void:
 	randomize()
 	label = $"../lbl_db_status"
 	label.text = "Database details:\nFilename: " + settings.db_name + "\nTable: " + settings.db_table
@@ -13,31 +13,31 @@ func _ready():
 	db.default_extension = ""
 	db.path = settings.db_name
 
-func db_create():
+func db_create() -> void:
 	db.read_only = false
 	db.open_db()
 	db.drop_table(settings.db_table)
-	db.create_table(settings.db_table, {
-		"FirstName" : {"data_type":"char(40)", "not_null": true},
-		"LastName" : {"data_type":"char(40)", "not_null": true},
-		"Email" : {"data_type":"char(40)", "not_null": true},
-		"Phone" : {"data_type":"char(40)", "not_null": true},
-		"Nationality" : {"data_type":"char(40)", "not_null": true},
-		"Gender" : {"data_type":"char(40)", "not_null": true},
-		"Score" : {"data_type":"int", "not_null": true}
+	db.create_table(settings.db_table,{
+		"FirstName": {"data_type":"char(40)", "not_null": true},
+		"LastName": {"data_type":"char(40)", "not_null": true},
+		"Email": {"data_type":"char(40)", "not_null": true},
+		"Phone": {"data_type":"char(40)", "not_null": true},
+		"Nationality": {"data_type":"char(40)", "not_null": true},
+		"Gender": {"data_type":"char(40)", "not_null": true},
+		"Score": {"data_type":"int", "not_null": true}
 	})
 	db.close_db()
 	label.text = "Database created"
 
-func db_insert(data: Dictionary):
+func db_insert(data: Dictionary) -> void:
 	db.open_db()
 	db.insert_row(settings.db_table,{"FirstName":data["FirstName"],"LastName":data["LastName"],"Email":data["Email"],"Phone":data["Phone"],"Nationality":data["Nationality"],"Gender":data["Gender"],"Score":int(data["Score"])})
 	db.close_db()
 
-func db_fill():
+func db_fill() -> void:
 	const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 	var rnd_str = func(maxlen: int):
-		var result : String = ""
+		var result: String = ""
 		for i in range(randi() % maxlen + 1):
 			result += characters[randi() % characters.length()]
 		return result
@@ -45,7 +45,7 @@ func db_fill():
 	if not db.open_db():
 		label.text = "Error opening database"
 		return
-	var row_array : Array = []
+	var row_array: Array = []
 	for i in 100:
 		row_array.append({"FirstName":rnd_str.call(10),"LastName":rnd_str.call(10),"Email":rnd_str.call(6)+"@"+rnd_str.call(10),"Phone":str(randi() % 10000000),"Nationality":rnd_str.call(15),"Gender":rnd_str.call(1),"Score":randi() % 100000})
 	if db.insert_rows(settings.db_table, row_array):
@@ -54,7 +54,7 @@ func db_fill():
 		label.text = "Error writing to table: " + settings.db_table
 	db.close_db()
 
-func db_read():
+func db_read() -> void:
 	label.text = ""
 	if not FileAccess.file_exists(settings.db_name):
 		label.text = "Error: database not found"
@@ -65,7 +65,7 @@ func db_read():
 			label.text = "Error opening database"
 		else:
 			db.query("SELECT FirstName, LastName, Score FROM " + settings.db_table + " ORDER BY score DESC LIMIT 5;")
-			var query_result : Array = db.query_result
+			var query_result: Array = db.query_result
 			if query_result.is_empty():
 				label.text = "EMPTY DATABASE"
 			else:

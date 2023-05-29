@@ -1,18 +1,18 @@
 extends Node
 
-var db_name : String
-var db_table : String
-var background : String
-var udp_port : int
-var mouse : bool
-var passphrase : String
-var settingsfile : String
+var db_name: String
+var db_table: String
+var background: String
+var udp_port: int
+var mouse: bool
+var passphrase: String
+var settingsfile: String
 
-func _ready():
+func _ready() -> void:
 	var cmdline = OS.get_cmdline_user_args()
 	if len(cmdline) > 0:
 		db_name = cmdline[0]
-	var settingspath : String
+	var settingspath: String
 	if OS.has_feature("editor"):
 		settingsfile = ProjectSettings.globalize_path("res://settings.json");
 	else:

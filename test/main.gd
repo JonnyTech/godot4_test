@@ -1,10 +1,10 @@
 extends Node
 
-var udp_ip = "127.0.0.1"
+var udp_ip: String = "127.0.0.1"
 var udp = PacketPeerUDP.new()
-var label : Label
+var label: Label
 
-func _ready():
+func _ready() -> void:
 	if not settings.mouse:
 		mouse_visibility(Input.MOUSE_MODE_HIDDEN)
 	label = $lbl_udp_status
@@ -15,7 +15,7 @@ func _ready():
 	label.text += "\nMouse: " + str(settings.mouse) + "\nBackground: " + settings.background + "\nPassphrase: " + settings.passphrase
 	label.text += "\nSettings: " + settings.settingsfile
 
-func _input(event):
+func _input(event) -> void:
 	if event is InputEventKey and event.pressed:
 		match event.keycode:
 			KEY_M:
@@ -34,16 +34,16 @@ func _input(event):
 					OS.alert("Bye...", "EXIT")
 				get_tree().quit()
 
-func mouse_visibility(state : Input.MouseMode):
+func mouse_visibility(state: Input.MouseMode) -> void:
 	Input.mouse_mode = state
 	label = $lbl_info
 	label.text += "\nMouse: " + str(state)
 
-func udp_send():
+func udp_send() -> void:
 	udp.set_dest_address(udp_ip,settings.udp_port)
 	udp.put_packet("HELLO".to_ascii_buffer())
 
-func udp_receive():
+func udp_receive() -> void:
 	if udp.get_available_packet_count() > 0:
 		var array_bytes = udp.get_packet()
 		label.text = "[" + str(Time.get_ticks_usec()) + "] " + array_bytes.get_string_from_ascii()
@@ -52,8 +52,8 @@ func udp_receive():
 			if udp_dict["Passphrase"] == settings.passphrase:
 				$script_db.db_insert(udp_dict)
 
-func _process(_delta):
+func _process(_delta) -> void:
 	udp_receive()
 
-func _exit_tree():
+func _exit_tree() -> void:
 	udp.close()	

@@ -2,8 +2,8 @@
 Godot 4 experimentations
 
 Acknowledgements:<br />
-https://github.com/godotengine/godot\
-https://github.com/2shady4u/godot-sqlite\
+https://github.com/godotengine/godot \
+https://github.com/2shady4u/godot-sqlite \
 https://github.com/lipis/flag-icons
 
 Video encodes:
